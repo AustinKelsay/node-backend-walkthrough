@@ -3,10 +3,30 @@
 A step-by-step walkthrough on how to setup and deploy a nodejs backend built with Express / Knex / SQLite (dev db) / Postgres (production db)
 
 
-## Step 1: Setting up your project / dependencies:
+## Step 1: Setting up your project / dependencies
 
-- Set up a new Node.js project by creating a new directory and running npm init to create a package.json file.
-- Install the necessary dependencies by running npm install express knex sqlite3 dotenv.
+### 1.1 Create a new Node.js project
+To set up a new Node.js project, follow these steps:
+
+- Create a new directory for your project by running the following command in the terminal:
+`mkdir my-project`
+
+- Navigate into the new directory by running:
+`cd my-project`
+- Initialize a new Node.js project by running:
+`npm init`
+- Answer the prompts to generate a package.json file for your project.
+### 1.2 Install necessary dependencies
+To install the necessary dependencies for your project, run the following command in the terminal:
+`npm install express knex sqlite3 dotenv`
+
+This will install the following packages:
+
+- express: A popular web framework for Node.js that simplifies the process of building web applications.
+- knex: A SQL query builder for Node.js that provides a convenient way to interact with databases.
+- sqlite3: A Node.js module that provides an SQLite database driver for use with Knex.
+- dotenv: A zero-dependency module that loads environment variables from a .env file into process.env.
+You can install additional packages as needed for your project. Once the dependencies are installed, you can begin setting up your Node.js app with Express and Knex.
 
 ## Step 2: Setting up the basic Express server
 
