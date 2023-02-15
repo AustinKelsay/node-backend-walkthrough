@@ -18,7 +18,7 @@ To set up a new Node.js project, follow these steps:
 - Answer the prompts to generate a package.json file for your project.
 ### 1.2 Install necessary dependencies
 To install the necessary dependencies for your project, run the following command in the terminal:
-`npm install express knex sqlite3 dotenv`
+`npm install express knex sqlite3 dotenv pg nodemon helmet morgan`
 
 This will install the following packages:
 
