@@ -26,12 +26,46 @@ This will install the following packages:
 - knex: A SQL query builder for Node.js that provides a convenient way to interact with databases.
 - sqlite3: A Node.js module that provides an SQLite database driver for use with Knex.
 - dotenv: A zero-dependency module that loads environment variables from a .env file into process.env.
+
 You can install additional packages as needed for your project. Once the dependencies are installed, you can begin setting up your Node.js app with Express and Knex.
 
-## Step 2: Setting up the basic Express server
+### 2.1 Create an app.js file
+To create the basic Express server, follow these steps:
 
-- Create an app.js file and import the necessary modules (express, knex, and dotenv).
-- Set up the server by defining the necessary routes and middleware, and configuring any necessary settings (such as the port to listen on).
+- Create a new file called app.js in the root directory of your project by running the following command in the terminal:
+`touch app.js`
+- Open the app.js file in your preferred code editor.
+
+### 2.2 Import necessary modules
+To use Express, Knex, and Dotenv in your app.js file, you need to import them at the top of the file:
+
+`const express = require('express');
+const knex = require('knex');
+require('dotenv').config();`
+
+### 2.3 Set up the server
+To set up the server, you need to define the necessary routes and middleware, and configure any necessary settings. Here's an example:
+
+`const app = express();
+const port = process.env.PORT || 3000;
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Routes
+app.get('/', (req, res) => {
+  res.send('Hello, world!');
+});
+
+// Listen
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});`
+
+In this example, we're creating a new instance of the Express application (app) and setting the port to listen on. We're also setting up some basic middleware to parse incoming requests (using the express.json() and express.urlencoded() middleware) and defining a simple route that sends a "Hello, world!" message as the response. Finally, we're starting the server by calling the listen() method on the app instance.
+
+You can customize this example to fit your specific needs by adding additional routes and middleware, or configuring other settings (such as database connections).
 
 ## Step 3: Creating a local SQLite database and setting up Knex
 
