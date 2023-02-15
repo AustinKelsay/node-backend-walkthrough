@@ -71,10 +71,61 @@ In this example, we're creating a new instance of the Express application (app) 
 
 You can customize this example to fit your specific needs by adding additional routes and middleware, or configuring other settings (such as database connections).
 
-## Step 3: Creating a local SQLite database and setting up Knex
+## Step 3: Setting up DBConfig with settings for local SQLite db and production Postgres db
 
-- Create a local SQLite database by running sqlite3 mydatabase.db in the command line.
-- Set up Knex by creating a knexfile.js file in the root directory of the project and configuring it to use SQLite for local development and Postgres for deployment.
+### 3.1 Create a knexfile.js file
+To use Knex to manage your database, you need to create a knexfile.js file in the root directory of your project. This file will contain the configuration settings for your database, including the connection settings for your local SQLite database and your production Postgres database.
+
+Here's an example knexfile.js:
+```
+module.exports = {
+  development: {
+    client: 'sqlite3',
+    connection: {
+      filename: './dev.sqlite3'
+    },
+    useNullAsDefault: true,
+    migrations: {
+      directory: './db/migrations'
+    },
+    seeds: {
+      directory: './db/seeds'
+    }
+  },
+
+  production: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+    migrations: {
+      directory: './db/migrations'
+    },
+    seeds: {
+      directory: './db/seeds'
+    }
+  }
+};
+```
+
+In this example, we're defining two environments: development and production. For the development environment, we're using SQLite as the database client and specifying a connection to a local file (./dev.sqlite3). We're also specifying the directories for our migrations and seeds.
+
+For the production environment, we're using Postgres as the database client and specifying a connection to a URL stored in the process.env.DATABASE_URL environment variable. We're using the same directories for our migrations and seeds.
+
+### 3.2 Import DBConfig and create a database instance
+To use the settings from your knexfile.js file in your Express server, you need to import DBConfig and create a database instance. Here's an example:
+
+```
+const knex = require('knex');
+const config = require('../knexfile');
+
+const env = process.env.NODE_ENV || 'development';
+const db = knex(config[env]);
+
+module.exports = db;
+```
+
+In this example, we're importing the knex library and the knexfile.js configuration settings. We're then setting the environment to use based on the NODE_ENV environment variable, defaulting to 'development' if the variable is not set. Finally, we're creating a new instance of the database using the configuration settings for the current environment and exporting it for use in our Express server.
+
+You can customize this example to fit your specific needs by updating the configuration settings in your knexfile.js file, or using a different method to set the environment (such as using process.env.DB_ENV).
 
 ## Step 4: Creating a migration to set up the database schema
 
