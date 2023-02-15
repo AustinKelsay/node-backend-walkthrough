@@ -26,6 +26,10 @@ This will install the following packages:
 - knex: A SQL query builder for Node.js that provides a convenient way to interact with databases.
 - sqlite3: A Node.js module that provides an SQLite database driver for use with Knex.
 - dotenv: A zero-dependency module that loads environment variables from a .env file into process.env.
+- pg: A PostgreSQL database driver for use with Knex, which enables you to connect and interact with PostgreSQL databases from your Node.js application.
+- nodemon: A utility that monitors changes to your source code and automatically restarts your server, saving you from manually stopping and starting your server every time you make changes.
+- helmet: A middleware that helps secure your Express app by setting various HTTP headers.
+- morgan: A middleware that logs HTTP requests and responses.
 
 You can install additional packages as needed for your project. Once the dependencies are installed, you can begin setting up your Node.js app with Express and Knex.
 
