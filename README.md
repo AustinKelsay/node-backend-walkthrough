@@ -39,14 +39,17 @@ To create the basic Express server, follow these steps:
 ### 2.2 Import necessary modules
 To use Express, Knex, and Dotenv in your app.js file, you need to import them at the top of the file:
 
-``const express = require('express');
+```
+const express = require('express');
 const knex = require('knex');
-require('dotenv').config();``
+require('dotenv').config();
+```
 
 ### 2.3 Set up the server
 To set up the server, you need to define the necessary routes and middleware, and configure any necessary settings. Here's an example:
 
-`const app = express();
+```
+const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
@@ -61,7 +64,8 @@ app.get('/', (req, res) => {
 // Listen
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-});`
+});
+```
 
 In this example, we're creating a new instance of the Express application (app) and setting the port to listen on. We're also setting up some basic middleware to parse incoming requests (using the express.json() and express.urlencoded() middleware) and defining a simple route that sends a "Hello, world!" message as the response. Finally, we're starting the server by calling the listen() method on the app instance.
 
