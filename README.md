@@ -240,7 +240,7 @@ You can test these routes using a tool like Insomnia or Postman.
 
 ## Step 6: Deploying to Heroku
 
-### 5.1 Create a new Heroku app
+### 6.1 Create a new Heroku app
 To deploy your Node.js app to Heroku, you need to create a new Heroku app. Follow these steps to create a new Heroku app:
 
 - Log in to your Heroku account and navigate to the Heroku Dashboard.
@@ -248,7 +248,7 @@ To deploy your Node.js app to Heroku, you need to create a new Heroku app. Follo
 - Enter a unique name for your app and select a region.
 - Click the "Create app" button.
 
-### 5.2 Connect your Heroku app to your GitHub repository
+### 6.2 Connect your Heroku app to your GitHub repository
 To connect your Heroku app to your GitHub repository, follow these steps:
 
 - In the "Deploy" tab of your Heroku app dashboard, select "GitHub" as the deployment method.
@@ -257,7 +257,7 @@ To connect your Heroku app to your GitHub repository, follow these steps:
 - Choose the branch you want to deploy.
 - Click the "Enable Automatic Deploys" button.
 
-### 5.3 Set up environment variables on Heroku
+### 6.3 Set up environment variables on Heroku
 To set up environment variables on Heroku, follow these steps:
 
 - In the "Settings" tab of your Heroku app dashboard, click the "Reveal Config Vars" button.
@@ -269,7 +269,7 @@ In this example, you would need to set the following environment variables:
 DATABASE_URL: The connection URL for your production Postgres database. You can find this in the Heroku Postgres add-on settings.
 NODE_ENV: The environment setting for your app. Set this to "production".
 
-### 5.4 Deploy your app to Heroku
+### 6.4 Deploy your app to Heroku
 To deploy your app to Heroku, follow these steps:
 
 - In the "Deploy" tab of your Heroku app dashboard, click the "Deploy Branch" button to deploy your app to Heroku.
