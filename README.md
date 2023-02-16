@@ -88,7 +88,7 @@ In this example, we're creating a new instance of the Express application (app) 
 
 You can customize this example to fit your specific needs by adding additional routes and middleware, or configuring other settings (such as database connections).
 
-## Step 3: Setting up DBConfig with settings for local SQLite db and production Postgres db
+## Step 3: Setting up database config with settings for a local SQLite db and a production Postgres db
 
 ### 3.1 Create a knexfile.js file
 To use Knex to manage your database, you need to create a knexfile.js file in the root directory of your project. This file will contain the configuration settings for your database, including the connection settings for your local SQLite database and your production Postgres database.
