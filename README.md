@@ -232,6 +232,8 @@ To run your seed files run the following command in your terminal:
 
 Great now we have a local database, we have a schema for our users table, and a seed file with dummy data to save to our db and test our user schema!
 
+## Step 5: Creating and testing a User model
+
 ### 5.1 Create a User model
 Now that the users table has been created in the database, you can create a User model to interact with it.
 
@@ -240,22 +242,32 @@ These will be the methods that our endpoints call to make changes or get data fr
 Create a new `models` directory in our `db/` directory and add a file called `User.js` in the models directory and add the following code:
 
 ```
-const db = require('../dbConfig');
+// require the database configuration module
+const db = require("../dbConfig");
 
 module.exports = {
+  // a function to find a user by id
   findById: (id) => {
-    return db('users').where({ id }).first();
+    // query the 'users' table for the user with the given id
+    return db("users").where({ id }).first();
   },
+  // a function to create a new user
   create: (user) => {
-    return db('users').insert(user).returning('*');
+    // insert the user object into the 'users' table and return the inserted user object
+    return db("users").insert(user).returning("*");
   },
+  // a function to update an existing user with the given id
   update: (id, user) => {
-    return db('users').where({ id }).update(user).returning('*');
+    // update the user object in the 'users' table where the id matches and return the updated user object
+    return db("users").where({ id }).update(user).returning("*");
   },
+  // a function to delete an existing user with the given id
   delete: (id) => {
-    return db('users').where({ id }).del();
+    // delete the user from the 'users' table where the id matches
+    return db("users").where({ id }).del();
   },
 };
+
 ```
 
 This model has four methods:
@@ -266,78 +278,59 @@ This model has four methods:
 
 Each method returns a Knex query object.
 
-### 4.5 Test the User model
+### 5.2 Test the User model
 To test the User model, add some routes to your Express app that interact with the User model. Here are some examples:
 
 ```
-app.post('/users', async (req, res) => {
+const User = require("../models/User");
+
+// This route is for creating a new user.
+app.post("/users", async (req, res) => {
+  // Extracts the name, email, and password from the request body.
   const { name, email, password } = req.body;
+  // Calls the User.create function and passes in the extracted values to create a new user.
   const user = await User.create({ name, email, password });
+  // Sends the created user as a JSON response.
   res.json(user);
 });
 
-app.get('/users/:id', async (req, res) => {
+// This route is for getting a user by ID.
+app.get("/users/:id", async (req, res) => {
+  // Extracts the ID parameter from the request.
   const { id } = req.params;
+  // Calls the User.findById function and passes in the ID to retrieve the user with that ID.
   const user = await User.findById(id);
+  // Sends the retrieved user as a JSON response.
   res.json(user);
 });
 
-app.put('/users/:id', async (req, res) => {
+// This route is for updating a user by ID.
+app.put("/users/:id", async (req, res) => {
+  // Extracts the ID parameter from the request.
   const { id } = req.params;
+  // Extracts the updated name, email, and password from the request body.
   const { name, email, password } = req.body;
+  // Calls the User.update function and passes in the ID and updated values to update the user with that ID.
   const user = await User.update(id, { name, email, password });
+  // Sends the updated user as a JSON response.
   res.json(user);
 });
 
-app.delete('/users/:id', async (req, res) => {
+// This route is for deleting a user by ID.
+app.delete("/users/:id", async (req, res) => {
+  // Extracts the ID parameter from the request.
   const { id } = req.params;
+  // Calls the User.delete function and passes in the ID to delete the user with that ID.
   const user = await User.delete(id);
+  // Sends the deleted user as a JSON response.
   res.json(user);
 });
+
 ```
 
 These routes allow you to create, read, update, and delete users. When you make a POST request to the /users route, a new user will be created in the database. When you make a GET request to the /users/:id route, the user with the specified ID will be returned. When you make a PUT request to the /users/:id route, the user with the specified ID will be updated. When you make a DELETE request to the /users/:id route, the user with the specified ID will be deleted.
 
 You can test these routes using a tool like Insomnia or Postman.
-
-## Step 5: Seeding your local database
-
-### 5.1 Create seed files
-To seed your database, you need to create seed files that contain the data you want to insert into your tables. Seed files should be named with a descriptive name and should be placed in the directory specified in your knexfile.js.
-
-To create a new seed file, run the following command in your terminal:
-
-`knex seed:make seed_name`
-
-This will create a new seed file in your specified directory. You can then edit this file to add the data you want to insert.
-
-### 5.2 Add data to seed files
-In your seed files, you can use Knex to insert data into your tables. Here's an example:
-
-```
-exports.seed = function(knex) {
-  // Deletes ALL existing entries
-  return knex('table_name').del()
-    .then(function () {
-      // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
-      ]);
-    });
-};
-```
-
-In this example, we're deleting all existing entries in the 'table_name' table and then inserting new entries. You can modify this code to match the schema of your tables and the data you want to insert.
-
-### 5.3 Seed your database
-To seed your database, run the following command in your terminal:
-
-`knex seed:run`
-This will execute all seed files in your specified directory and insert the data into your database.
-
-That's it! You should now have a seeded local database ready to be used in your Node.js app. You can now start your app and test your routes to ensure that the data is being retrieved and updated correctly.
 
 ## Step 6: Deploying to Heroku
 
