@@ -278,8 +278,11 @@ This model has four methods:
 
 Each method returns a Knex query object.
 
-### 5.2 Test the User model
-To test the User model, add some routes to your Express app that interact with the User model. Here are some examples:
+## 5.2 Add routes to interact with the User model
+To test the User model, you need to add some routes to your Express app that interact with the User model.
+
+- Create a `routers` directory at the root of your repository.
+- Create a new file called `userRouter.js` in the routers directory with the following code:
 
 ```
 const User = require("../models/User");
@@ -325,12 +328,47 @@ app.delete("/users/:id", async (req, res) => {
   // Sends the deleted user as a JSON response.
   res.json(user);
 });
-
 ```
 
-These routes allow you to create, read, update, and delete users. When you make a POST request to the /users route, a new user will be created in the database. When you make a GET request to the /users/:id route, the user with the specified ID will be returned. When you make a PUT request to the /users/:id route, the user with the specified ID will be updated. When you make a DELETE request to the /users/:id route, the user with the specified ID will be deleted.
+Now back in app.js, import the userRouter module and add a new /users route
 
-You can test these routes using a tool like Insomnia or Postman.
+Your updated app.js should look like this:
+
+```
+const express = require("express");
+const knex = require("knex");
+const dotenv = require("dotenv");
+const pg = require("pg");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const userRouter = require("./routes/userRouter");
+
+require("dotenv").config();
+
+const app = express();
+const port = process.env.PORT || 5500;
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(helmet());
+app.use(morgan("common"));
+
+// Routes
+app.get("/", (req, res) => {
+  res.send("Hello, world!");
+});
+
+// Points to the userRouter and adds the /users prefix to all routes in the userRouter.
+app.use("/users", userRouter);
+
+// Listen
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+```
+
+You can now test these routes using a tool like Insomnia or Postman.
 
 ## Step 6: Deploying to Heroku
 
