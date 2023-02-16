@@ -131,31 +131,149 @@ In this example, we're importing the knex library and the knexfile.js configurat
 
 You can customize this example to fit your specific needs by updating the configuration settings in your knexfile.js file, or using a different method to set the environment (such as using process.env.DB_ENV).
 
-## Step 4: Creating a migration to set up the database schema
+## Step 4: Setting up a user model and migration
 
-- Create a migration file to set up the database schema by running knex migrate:make create_table_name.
-- Write the necessary code in the migration file to create the database schema, including defining the table schema and any necessary indexes or constraints.
+### 4.1 Create a new migration
+To set up a user model and database table, you will need to create a new migration file. Migrations are scripts that describe how to modify the database schema.
 
-## Step 5: Running the migration and creating a seed to populate the database
+To create a new migration file, run the following command in your terminal:
 
-- Run the migration to create the database table by running knex migrate:latest.
-- Create a seed file to populate the database with initial data by running knex seed:make seed_name.
-- Write the necessary code in the seed file to insert initial data into the database.
-- Run the seed to insert the initial data by running knex seed:run.
+`npx knex migrate:make create_users_table`
 
-## Step 6: Updating the Express server to use the database
+This will generate a new migration file inside the directory specified in the knexfile.js for migrations (e.g. /db/migrations in the example).
 
-- Import Knex into the app.js file and use it to handle database requests.
-- Define the necessary routes and middleware to handle database requests, such as creating, reading, updating, and deleting records.
+### 4.2 Define the user table schema
+Open the newly created migration file and add the schema for the user table. Here is an example:
 
-## Step 7: Testing the server locally
+```
+exports.up = function (knex) {
+  return knex.schema.createTable('users', function (table) {
+    table.increments('id').primary();
+    table.string('name').notNullable();
+    table.string('email').unique().notNullable();
+    table.string('password').notNullable();
+    table.timestamps(true, true);
+  });
+};
 
-- Test the server locally by running npm start in the command line and making requests to the API using a tool like Postman.
-- Ensure that the server is properly handling database requests and returning the expected data.
+exports.down = function (knex) {
+  return knex.schema.dropTableIfExists('users');
+};
+```
 
-## Step 8: Deploying the app to Heroku and using a Postgres database
+In this example, we are creating a users table with id, name, email, and password columns. The id column is a primary key, which will automatically generate a unique ID for each row added to the table. The email column is set to be unique, which means that it will be enforced as a unique constraint in the database. The timestamps method is used to automatically create created_at and updated_at columns for the table.
 
-- Create a new Heroku app and set up a Postgres database for production.
-- Configure the app to use the Postgres database in production by updating the knexfile.js configuration.
-- Push the app to Heroku and ensure that it is properly deployed.
-- Test the deployed app by making requests to the API using the Heroku URL.
+The down method describes how to undo the changes made by the up method.
+
+###v4.3 Run the migration
+To apply the migration and create the users table in your database, run the following command in your terminal:
+
+`npx knex migrate:latest`
+
+This will execute all pending migrations and update your database schema.
+
+### 4.4 Create a User model
+Now that the users table has been created in the database, you can create a User model to interact with it.
+
+Create a new file User.js in the models directory of your project and add the following code:
+
+```
+const db = require('../dbConfig');
+
+module.exports = {
+  findById: (id) => {
+    return db('users').where({ id }).first();
+  },
+  create: (user) => {
+    return db('users').insert(user).returning('*');
+  },
+  update: (id, user) => {
+    return db('users').where({ id }).update(user).returning('*');
+  },
+  delete: (id) => {
+    return db('users').where({ id }).del();
+  },
+};
+```
+
+This model has four methods:
+- findById: finds a user by their ID
+- create: creates a new user in the database
+- update: updates an existing user in the database
+- delete: deletes a user from the database
+
+Each method returns a Knex query object.
+
+### 4.5 Test the User model
+To test the User model, add some routes to your Express app that interact with the User model. Here are some examples:
+
+```
+app.post('/users', async (req, res) => {
+  const { name, email, password } = req.body;
+  const user = await User.create({ name, email, password });
+  res.json(user);
+});
+
+app.get('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  res.json(user);
+});
+
+app.put('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password } = req.body;
+  const user = await User.update(id, { name, email, password });
+  res.json(user);
+});
+
+app.delete('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const user = await User.delete(id);
+  res.json(user);
+});
+```
+
+These routes allow you to create, read, update, and delete users. When you make a POST request to the /users route, a new user will be created in the database. When you make a GET request to the /users/:id route, the user with the specified ID will be returned. When you make a PUT request to the /users/:id route, the user with the specified ID will be updated. When you make a DELETE request to the /users/:id route, the user with the specified ID will be deleted.
+
+You can test these routes using a tool like Insomnia or Postman.
+
+## Step 6: Deploying to Heroku
+
+### 5.1 Create a new Heroku app
+To deploy your Node.js app to Heroku, you need to create a new Heroku app. Follow these steps to create a new Heroku app:
+
+- Log in to your Heroku account and navigate to the Heroku Dashboard.
+- Click the "New" button in the top right corner and select "Create new app" from the dropdown menu.
+- Enter a unique name for your app and select a region.
+- Click the "Create app" button.
+
+### 5.2 Connect your Heroku app to your GitHub repository
+To connect your Heroku app to your GitHub repository, follow these steps:
+
+- In the "Deploy" tab of your Heroku app dashboard, select "GitHub" as the deployment method.
+- Connect your Heroku account to your GitHub account by clicking the "Connect to GitHub" button and following the prompts.
+- Select the GitHub repository that contains your Node.js app.
+- Choose the branch you want to deploy.
+- Click the "Enable Automatic Deploys" button.
+
+### 5.3 Set up environment variables on Heroku
+To set up environment variables on Heroku, follow these steps:
+
+- In the "Settings" tab of your Heroku app dashboard, click the "Reveal Config Vars" button.
+- Enter the name and value for each environment variable you want to set.
+- Click the "Add" button for each environment variable.
+
+In this example, you would need to set the following environment variables:
+
+DATABASE_URL: The connection URL for your production Postgres database. You can find this in the Heroku Postgres add-on settings.
+NODE_ENV: The environment setting for your app. Set this to "production".
+
+### 5.4 Deploy your app to Heroku
+To deploy your app to Heroku, follow these steps:
+
+- In the "Deploy" tab of your Heroku app dashboard, click the "Deploy Branch" button to deploy your app to Heroku.
+- Wait for the deployment process to complete.
+- Once the deployment is complete, click the "View" button to open your app in a new browser window.
+
+That's it! Your Node.js app should now be deployed and running on Heroku. If you run into any issues, you can view the logs in the "More" tab of your Heroku app dashboard to help diagnose the problem.
