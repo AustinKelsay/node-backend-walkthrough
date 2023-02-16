@@ -16,8 +16,10 @@ To set up a new Node.js project, follow these steps:
 - Initialize a new Node.js project by running:
 `npm init`
 - Answer the prompts to generate a package.json file for your project.
+
 ### 1.2 Install necessary dependencies
 To install the necessary dependencies for your project, run the following command in the terminal:
+
 `npm install express knex sqlite3 dotenv pg nodemon helmet morgan`
 
 This will install the following packages:
@@ -33,23 +35,32 @@ This will install the following packages:
 
 You can install additional packages as needed for your project. Once the dependencies are installed, you can begin setting up your Node.js app with Express and Knex.
 
+## Step 2: Setting up your Express server
+
 ### 2.1 Create an app.js file
+
 To create the basic Express server, follow these steps:
 
-- Create a new file called app.js in the root directory of your project by running the following command in the terminal:
-`touch app.js`
+- Create a new file called app.js in the root directory of your project by running the following command in the terminal: touch app.js
 - Open the app.js file in your preferred code editor.
 
-### 2.2 Import necessary modules
-To use Express, Knex, and Dotenv in your app.js file, you need to import them at the top of the file:
+### 2.2 Import necessary modules and middleware
+
+To use Express, Knex, Dotenv, pg, helmet, and morgan in your app.js file, you need to import them at the top of the file:
 
 ```
 const express = require('express');
 const knex = require('knex');
+const dotenv = require('dotenv');
+const pg = require('pg');
+const helmet = require('helmet');
+const morgan = require('morgan');
+
 require('dotenv').config();
 ```
 
 ### 2.3 Set up the server
+
 To set up the server, you need to define the necessary routes and middleware, and configure any necessary settings. Here's an example:
 
 ```
@@ -59,19 +70,21 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(helmet());
+app.use(morgan('combined'));
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Hello, world!');
+res.send('Hello, world!');
 });
 
 // Listen
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+console.log(Server running on port ${port});
 });
 ```
 
-In this example, we're creating a new instance of the Express application (app) and setting the port to listen on. We're also setting up some basic middleware to parse incoming requests (using the express.json() and express.urlencoded() middleware) and defining a simple route that sends a "Hello, world!" message as the response. Finally, we're starting the server by calling the listen() method on the app instance.
+In this example, we're creating a new instance of the Express application (app) and setting the port to listen on. We're also setting up some basic middleware to parse incoming requests (using the express.json() and express.urlencoded() middleware), as well as the helmet() and morgan() middleware for security and logging purposes. We're also defining a simple route that sends a "Hello, world!" message as the response. Finally, we're starting the server by calling the listen() method on the app instance.
 
 You can customize this example to fit your specific needs by adding additional routes and middleware, or configuring other settings (such as database connections).
 
