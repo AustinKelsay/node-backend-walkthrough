@@ -188,12 +188,49 @@ In this example, we are creating a users table with id, name, email, and passwor
 
 The down method describes how to undo the changes made by the up method.
 
-### 4.3 Run the migration
+### 4.3 Seed the database
+
+To seed the database with initial data, you need to create seed files that contain the data you want to insert into your tables. Seed files should be named with a descriptive name and should be placed in the directory specified in your knexfile.js.
+
+To create a new seed file, run the following command in your terminal:
+
+`npx knex seed:make 01_users`
+This will create a new seed file named 01_users.js in the seeds directory of your project. You can then edit this file to add the data you want to insert.
+
+In your seed files, you can use Knex to insert data into your tables. Here's an example:
+
+```
+exports.seed = function(knex) {
+  // Deletes ALL existing entries
+  return knex('users').del()
+    .then(function () {
+      // Inserts seed entries
+      return knex('users').insert([
+        { username: 'user1', password: 'password1' },
+        { username: 'user2', password: 'password2' },
+        { username: 'user3', password: 'password3' }
+      ]);
+    });
+};
+```
+
+In this example, we're deleting all existing entries in the users table and then inserting new entries. You can modify this code to match the data you want to insert into your table.
+
+### 4.4 Run the migration
 To apply the migration and create the users table in your database, run the following command in your terminal:
 
 `npx knex migrate:latest`
 
 This will execute all pending migrations and update your database schema.
+
+### 4.5 Run the seeds
+Now that the user table is created in our local database we can test it by running our seeds and attempting to save our dummy user objects into our database
+
+To run your seed files run the following command in your terminal:
+
+`npx knex seed:run`
+
+Great now we have a local database, we have a schema for our users table, and a seed file with dummy data to save to our db and test our user schema!
 
 ### 4.4 Create a User model
 Now that the users table has been created in the database, you can create a User model to interact with it.
