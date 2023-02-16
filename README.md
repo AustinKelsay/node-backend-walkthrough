@@ -232,10 +232,12 @@ To run your seed files run the following command in your terminal:
 
 Great now we have a local database, we have a schema for our users table, and a seed file with dummy data to save to our db and test our user schema!
 
-### 4.4 Create a User model
+### 5.1 Create a User model
 Now that the users table has been created in the database, you can create a User model to interact with it.
 
-Create a new file User.js in the models directory of your project and add the following code:
+These will be the methods that our endpoints call to make changes or get data from our database.
+
+Create a new `models` directory in our `db/` directory and add a file called `User.js` in the models directory and add the following code:
 
 ```
 const db = require('../dbConfig');
