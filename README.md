@@ -71,7 +71,7 @@ const port = process.env.PORT || 5500;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
-app.use(morgan('combined'));
+app.use(morgan('common'));
 
 // Routes
 app.get('/', (req, res) => {
