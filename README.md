@@ -238,6 +238,45 @@ These routes allow you to create, read, update, and delete users. When you make 
 
 You can test these routes using a tool like Insomnia or Postman.
 
+## Step 5: Seeding your local database
+
+### 5.1 Create seed files
+To seed your database, you need to create seed files that contain the data you want to insert into your tables. Seed files should be named with a descriptive name and should be placed in the directory specified in your knexfile.js.
+
+To create a new seed file, run the following command in your terminal:
+
+`knex seed:make seed_name`
+
+This will create a new seed file in your specified directory. You can then edit this file to add the data you want to insert.
+
+### 5.2 Add data to seed files
+In your seed files, you can use Knex to insert data into your tables. Here's an example:
+
+```
+exports.seed = function(knex) {
+  // Deletes ALL existing entries
+  return knex('table_name').del()
+    .then(function () {
+      // Inserts seed entries
+      return knex('table_name').insert([
+        {id: 1, colName: 'rowValue1'},
+        {id: 2, colName: 'rowValue2'},
+        {id: 3, colName: 'rowValue3'}
+      ]);
+    });
+};
+```
+
+In this example, we're deleting all existing entries in the 'table_name' table and then inserting new entries. You can modify this code to match the schema of your tables and the data you want to insert.
+
+### 5.3 Seed your database
+To seed your database, run the following command in your terminal:
+
+`knex seed:run`
+This will execute all seed files in your specified directory and insert the data into your database.
+
+That's it! You should now have a seeded local database ready to be used in your Node.js app. You can now start your app and test your routes to ensure that the data is being retrieved and updated correctly.
+
 ## Step 6: Deploying to Heroku
 
 ### 6.1 Create a new Heroku app
