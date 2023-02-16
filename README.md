@@ -75,12 +75,12 @@ app.use(morgan('combined'));
 
 // Routes
 app.get('/', (req, res) => {
-res.send('Hello, world!');
+  res.send('Hello, world!');
 });
 
 // Listen
 app.listen(port, () => {
-console.log(Server running on port ${port});
+  console.log(`Server running on port ${port}`);
 });
 ```
 
