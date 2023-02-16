@@ -188,7 +188,7 @@ In this example, we are creating a users table with id, name, email, and passwor
 
 The down method describes how to undo the changes made by the up method.
 
-###v4.3 Run the migration
+### 4.3 Run the migration
 To apply the migration and create the users table in your database, run the following command in your terminal:
 
 `npx knex migrate:latest`
