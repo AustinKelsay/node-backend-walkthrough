@@ -127,8 +127,9 @@ In this example, we're defining two environments: development and production. Fo
 
 For the production environment, we're using Postgres as the database client and specifying a connection to a URL stored in the process.env.DATABASE_URL environment variable. We're using the same directories for our migrations and seeds.
 
-### 3.2 Import DBConfig and create a database instance
-To use the settings from your knexfile.js file in your Express server, you need to import DBConfig and create a database instance. Here's an example:
+### 3.2 Create a database directory and config
+To use the settings from your knexfile.js file in your Express server, you need to create a new directory called `db` (the directory our knexfile is referencing) and inside of db add a file called `dbConfig.js` to create a database instance. 
+Here's an example:
 
 ```
 const knex = require('knex');
