@@ -65,7 +65,7 @@ To set up the server, you need to define the necessary routes and middleware, an
 
 ```
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5500;
 
 // Middleware
 app.use(express.json());
@@ -86,7 +86,11 @@ app.listen(port, () => {
 
 In this example, we're creating a new instance of the Express application (app) and setting the port to listen on. We're also setting up some basic middleware to parse incoming requests (using the express.json() and express.urlencoded() middleware), as well as the helmet() and morgan() middleware for security and logging purposes. We're also defining a simple route that sends a "Hello, world!" message as the response. Finally, we're starting the server by calling the listen() method on the app instance.
 
-You can customize this example to fit your specific needs by adding additional routes and middleware, or configuring other settings (such as database connections).
+You can now run `node app.js` in your termnial and start up the server!
+
+You should now see your .listen() message in the terminal `Server running on port 5500` if there are no errors.
+
+Now you can go into Insomnia or Postman and make a get request to `http://localhost:5500` and you should see your welcome message!
 
 ## Step 3: Setting up database config with settings for a local SQLite db and a production Postgres db
 
