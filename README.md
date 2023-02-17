@@ -40,8 +40,10 @@ You can install additional packages as needed for your project. Once the depende
 
 To create the basic Express server, follow these steps:
 
-- Create a new file called app.js in the root directory of your project by running the following command in the terminal: touch app.js
-- Open the app.js file in your preferred code editor.
+Create a new file called app.js in the root directory of your project by running the following command in the terminal: 
+`touch app.js`
+
+Open the app.js file in your preferred code editor.
 
 ### 2.2 Import necessary modules and middleware
 
