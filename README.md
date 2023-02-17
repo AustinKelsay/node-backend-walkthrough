@@ -82,6 +82,8 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+module.exports = app;
 ```
 
 In this example, we're creating a new instance of the Express application (app) and setting the port to listen on. We're also setting up some basic middleware to parse incoming requests (using the express.json() and express.urlencoded() middleware), as well as the helmet() and morgan() middleware for security and logging purposes. We're also defining a simple route that sends a "Hello, world!" message as the response. Finally, we're starting the server by calling the listen() method on the app instance.
@@ -286,6 +288,7 @@ To test the User model, you need to add some routes to your Express app that int
 
 ```
 const User = require("../models/User");
+const { app } = require("../app");
 
 // This route is for creating a new user.
 app.post("/users", async (req, res) => {
@@ -341,7 +344,7 @@ const dotenv = require("dotenv");
 const pg = require("pg");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const userRouter = require("./routes/userRouter");
+const userRouter = require("./routers/userRouter");
 
 require("dotenv").config();
 
@@ -366,6 +369,8 @@ app.use("/users", userRouter);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+module.exports = app;
 ```
 
 You can now test these routes using a tool like Insomnia or Postman.
