@@ -287,11 +287,10 @@ To test the User model, you need to add some routes to your Express app that int
 - Create a new file called `userRouter.js` in the routers directory with the following code:
 
 ```
-const User = require("../models/User");
-const { app } = require("../app");
+const router = require("express").Router();
 
 // This route is for creating a new user.
-app.post("/users", async (req, res) => {
+router.post("/users", async (req, res) => {
   // Extracts the name, email, and password from the request body.
   const { name, email, password } = req.body;
   // Calls the User.create function and passes in the extracted values to create a new user.
@@ -301,7 +300,7 @@ app.post("/users", async (req, res) => {
 });
 
 // This route is for getting a user by ID.
-app.get("/users/:id", async (req, res) => {
+router.get("/users/:id", async (req, res) => {
   // Extracts the ID parameter from the request.
   const { id } = req.params;
   // Calls the User.findById function and passes in the ID to retrieve the user with that ID.
@@ -311,7 +310,7 @@ app.get("/users/:id", async (req, res) => {
 });
 
 // This route is for updating a user by ID.
-app.put("/users/:id", async (req, res) => {
+router.put("/users/:id", async (req, res) => {
   // Extracts the ID parameter from the request.
   const { id } = req.params;
   // Extracts the updated name, email, and password from the request body.
@@ -323,7 +322,7 @@ app.put("/users/:id", async (req, res) => {
 });
 
 // This route is for deleting a user by ID.
-app.delete("/users/:id", async (req, res) => {
+router.delete("/users/:id", async (req, res) => {
   // Extracts the ID parameter from the request.
   const { id } = req.params;
   // Calls the User.delete function and passes in the ID to delete the user with that ID.
@@ -331,6 +330,8 @@ app.delete("/users/:id", async (req, res) => {
   // Sends the deleted user as a JSON response.
   res.json(user);
 });
+
+module.exports = router;
 ```
 
 Now back in app.js, import the userRouter module and add a new /users route
