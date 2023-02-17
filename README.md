@@ -14,8 +14,7 @@ To set up a new Node.js project, follow these steps:
 - Navigate into the new directory by running:
 `cd my-project`
 - Initialize a new Node.js project by running:
-`npm init`
-- Answer the prompts to generate a package.json file for your project.
+`npm init -y`
 
 ### 1.2 Install necessary dependencies
 To install the necessary dependencies for your project, run the following command in the terminal:
