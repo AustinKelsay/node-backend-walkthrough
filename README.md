@@ -287,20 +287,21 @@ To test the User model, you need to add some routes to your Express app that int
 - Create a new file called `userRouter.js` in the routers directory with the following code:
 
 ```
+const User = require("../db/models/User");
 const router = require("express").Router();
 
 // This route is for creating a new user.
-router.post("/users", async (req, res) => {
+router.post("/", async (req, res) => {
   // Extracts the name, email, and password from the request body.
-  const { name, email, password } = req.body;
+  const { username, password } = req.body;
   // Calls the User.create function and passes in the extracted values to create a new user.
-  const user = await User.create({ name, email, password });
+  const user = await User.create({ username, password });
   // Sends the created user as a JSON response.
   res.json(user);
 });
 
 // This route is for getting a user by ID.
-router.get("/users/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   // Extracts the ID parameter from the request.
   const { id } = req.params;
   // Calls the User.findById function and passes in the ID to retrieve the user with that ID.
@@ -310,19 +311,19 @@ router.get("/users/:id", async (req, res) => {
 });
 
 // This route is for updating a user by ID.
-router.put("/users/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   // Extracts the ID parameter from the request.
   const { id } = req.params;
-  // Extracts the updated name, email, and password from the request body.
-  const { name, email, password } = req.body;
+  // Extracts the updated username, and password from the request body.
+  const { username, password } = req.body;
   // Calls the User.update function and passes in the ID and updated values to update the user with that ID.
-  const user = await User.update(id, { name, email, password });
+  const user = await User.update(id, { username, password });
   // Sends the updated user as a JSON response.
   res.json(user);
 });
 
 // This route is for deleting a user by ID.
-router.delete("/users/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   // Extracts the ID parameter from the request.
   const { id } = req.params;
   // Calls the User.delete function and passes in the ID to delete the user with that ID.
