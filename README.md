@@ -100,32 +100,33 @@ Now you can go into Insomnia or Postman and make a get request to `http://localh
 To use Knex to manage your database, you need to create a knexfile.js file in the root directory of your project. This file will contain the configuration settings for your database, including the connection settings for your local SQLite database and your production Postgres database.
 
 Here's an example knexfile.js:
+
 ```
 module.exports = {
   development: {
-    client: 'sqlite3',
+    client: "sqlite3",
     connection: {
-      filename: './dev.sqlite3'
+      filename: "./db/dev.sqlite3",
     },
     useNullAsDefault: true,
     migrations: {
-      directory: './db/migrations'
+      directory: "./db/migrations",
     },
     seeds: {
-      directory: './db/seeds'
-    }
+      directory: "./db/seeds",
+    },
   },
 
   production: {
-    client: 'pg',
+    client: "pg",
     connection: process.env.DATABASE_URL,
     migrations: {
-      directory: './db/migrations'
+      directory: "./db/migrations",
     },
     seeds: {
-      directory: './db/seeds'
-    }
-  }
+      directory: "./db/seeds",
+    },
+  },
 };
 ```
 
