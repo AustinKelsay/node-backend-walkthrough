@@ -1,0 +1,30 @@
+{
+  "name": "backend-walkthrough",
+  "version": "1.0.0",
+  "description": "A step-by-step walkthrough on how to setup and deploy a nodejs backend built with Express / Knex / SQLite (dev db) / Postgres (production db)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AustinKelsay/node-backend-walkthrough.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AustinKelsay/node-backend-walkthrough/issues"
+  },
+  "homepage": "https://github.com/AustinKelsay/node-backend-walkthrough#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "knex": "^2.4.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20",
+    "pg": "^8.9.0",
+    "sqlite3": "^5.1.4"
+  }
+}
