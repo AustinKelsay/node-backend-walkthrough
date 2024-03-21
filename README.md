@@ -1,5 +1,7 @@
 # node-backend-walkthrough
 
+![image](https://github.com/AustinKelsay/node-backend-walkthrough/assets/53542748/a799d93d-adec-4630-9c4e-6f52b1cf0597)
+
 A step-by-step walkthrough on how to setup and deploy a nodejs backend built with Express / Knex / SQLite (dev db) / Postgres (production db)
 
 
